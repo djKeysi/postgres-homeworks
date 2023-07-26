@@ -13,8 +13,7 @@ CREATE table employees
 	last_name varchar(100) NOT NULL,
 	title text,
 	birth_date date,
-	notes text,
-	author int REFERENCES user_account(user_id) NOT NULL
+	notes text
 );
 
 CREATE table orders
