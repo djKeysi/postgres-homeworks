@@ -12,10 +12,15 @@ SELECT * INTO top_products FROM products WHERE discontinued = 1;
 -- Для 4-го пункта может потребоваться удаление ограничения, связанного с foreign_key. Подумайте, как это можно решить, чтобы связь с таблицей order_details все же осталась.
 
 -- Сначала удаляем ограничение:
-ALTER TABLE order_details DROP CONSTRAINT fk_orderdetails_products;
+ALTER TABLE order_details DROP CONSTRAINT fk_order_details_products;
 
 -- Удаляем продукты, снятые с продажи:
 DELETE FROM products WHERE discontinued = 1;
 
 -- Возвращаем ограничение:
-ALTER TABLE order_details ADD CONSTRAINT fk_orderdetails_products FOREIGN KEY (product_id) REFERENCES products(product_id);
+ALTER TABLE IF EXISTS public.order_details
+    ADD FOREIGN KEY (product_id)
+    REFERENCES public.products (product_id) MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
