@@ -24,3 +24,9 @@ ALTER TABLE IF EXISTS public.order_details
     ON UPDATE NO ACTION
     ON DELETE NO ACTION
     NOT VALID;
+
+
+-- 2 Вариант решения 4 зачачи:
+DELETE FROM order_details WHERE product_id IN (SELECT product_id FROM products WHERE discontinued=1);
+
+DELETE FROM products WHERE discontinued=1;
